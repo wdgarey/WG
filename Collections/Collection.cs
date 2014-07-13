@@ -66,5 +66,16 @@ namespace WG.Collections
 
             return isEmpty;
         }
+
+        /// <summary>
+        /// Gets the string representation of the collection.
+        /// </summary>
+        /// <returns>The string representation.</returns>
+        public override string ToString()
+        {
+            int count = this.Count;
+
+            return count.ToString();
+        }
     }
 }
