@@ -117,37 +117,36 @@ namespace WG.Collections.Trees
                 replacement = node.GetPredecessor();
 
                 this.Remove(replacement);
-
-                node.Element = replacement.Element;
+            }
+            else if (node.HasLeft())
+            {
+                replacement = node.Left;
+                node.Left = null;
+            }
+            else if (node.HasRight())
+            {
+                replacement = node.Right;
+                node.Right = null;
             }
             else
             {
-                if (node.HasLeft())
-                {
-                    replacement = node.Left;
-                }
-                else if (node.HasRight())
-                {
-                    replacement = node.Right;
-                }
-
                 if (node.IsLeft())
                 {
-                    node.Parent.Left = replacement;
+                    node.Parent.Left = null;
                 }
                 else if (node.IsRight())
                 {
-                    node.Parent.Right = replacement;
+                    node.Parent.Right = null;
                 }
                 else
                 {
-                    this.Root = replacement;
+                    this.Root = null;
                 }
+            }
 
-                if (replacement != null)
-                {
-                    replacement.Parent = node.Parent;
-                }
+            if (replacement != null)
+            {
+                node.Element = replacement.Element;
             }
         }
 
