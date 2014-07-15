@@ -118,41 +118,36 @@ namespace WG.Collections.Trees
 
                 this.Remove(replacement);
 
-                replacement.Left = node.Left;
-                replacement.Right = node.Right;
-
-                if (replacement.HasLeft())
-                {
-                    replacement.Left.Parent = replacement;
-                }
-
-                if (replacement.HasRight())
-                {
-                    replacement.Right.Parent = replacement;
-                }
-            }
-            else if (node.HasLeft())
-            {
-                replacement = node.Left;
-            }
-            else if (node.HasRight())
-            {
-                replacement = node.Right;
-            }
-
-            replacement.Parent = node.Parent;
-
-            if (node.IsLeft())
-            {
-                node.Parent.Left = replacement;
-            }
-            else if (node.IsRight())
-            {
-                node.Parent.Right = replacement;
+                node.Element = replacement.Element;
             }
             else
             {
-                this.Root = replacement;
+                if (node.HasLeft())
+                {
+                    replacement = node.Left;
+                }
+                else if (node.HasRight())
+                {
+                    replacement = node.Right;
+                }
+
+                if (node.IsLeft())
+                {
+                    node.Parent.Left = replacement;
+                }
+                else if (node.IsRight())
+                {
+                    node.Parent.Right = replacement;
+                }
+                else
+                {
+                    this.Root = replacement;
+                }
+
+                if (replacement != null)
+                {
+                    replacement.Parent = node.Parent;
+                }
             }
         }
 
