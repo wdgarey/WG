@@ -179,7 +179,113 @@ namespace WG.Collections.Trees
 
         protected virtual void RemoveCase1(RBTNode<DataType> node)
         {
-            throw new NotImplementedException("Have yet to implement deletion cases.");
+            if (node.HasParent() && node.Parent.IsBlack())
+            {
+                if (node.IsRed())
+                {
+                    node.MarkAsBlack();
+                }
+                else
+                {
+                    this.RemoveCase2(node);
+                }
+            }
+        }
+
+        protected virtual void RemoveCase2(RBTNode<DataType> node)
+        {
+            if (node.HasParent())
+            {
+                this.RemoveCase3(node);
+            }
+        }
+
+        protected virtual void RemoveCase3(RBTNode<DataType> node)
+        {
+            RBTNode<DataType> sibling = node.GetSibling();
+
+            if (sibling.IsRed())
+            {
+                RBTNode<DataType> parent = node.Parent;
+
+                parent.MarkAsRed();
+                sibling.MarkAsBlack();
+
+                if (node.IsLeft())
+                {
+                    this.RotateLeft(parent);
+                }
+                else
+                {
+                    this.RotateRight(parent);
+                }
+            }
+
+            this.RemoveCase4(node);
+        }
+
+        protected virtual void RemoveCase4(RBTNode<DataType> node)
+        {
+            RBTNode<DataType> parent = node.Parent;
+            RBTNode<DataType> sibling = node.GetSibling();
+
+            if (parent.IsBlack() && sibling.IsBlack() && (!sibling.HasLeft() || sibling.Left.IsBlack()) && ( !sibling.HasRight() || sibling.Right.IsBlack()))
+            {
+                sibling.MarkAsRed();
+                this.RemoveCase2(parent);
+            }
+            else if (parent.IsRed() && sibling.IsBlack() && (!sibling.HasLeft() || sibling.Left.IsBlack()) && (!sibling.HasRight() || sibling.Right.IsBlack()))
+            {
+                sibling.MarkAsRed();
+                parent.MarkAsBlack();
+            }
+            else
+            {
+                this.RemoveCase5(node);
+            }
+        }
+
+        protected virtual void RemoveCase5(RBTNode<DataType> node)
+        {
+            RBTNode<DataType> sibling = node.GetSibling();
+
+            if (sibling.IsBlack())
+            {
+                if (node.IsLeft() && (!sibling.HasRight() || sibling.Right.IsBlack()) && (sibling.HasLeft() && sibling.Left.IsRed()))
+                {
+                    sibling.MarkAsRed();
+                    sibling.Left.MarkAsBlack();
+                    this.RotateRight(sibling);
+                }
+                else if (node.IsRight() && (!sibling.HasLeft() || sibling.Left.IsBlack()) && (sibling.HasRight() && sibling.Right.IsRed()))
+                {
+                    sibling.MarkAsRed();
+                    sibling.Right.MarkAsBlack();
+                    this.RotateLeft(sibling);
+                }
+            }
+
+            this.RemoveCase6(node);
+        }
+
+        protected virtual void RemoveCase6(RBTNode<DataType> node)
+        {
+            RBTNode<DataType> parent = node.Parent;
+            RBTNode<DataType> sibling = node.GetSibling();
+
+            sibling.MarkAs(parent);
+            parent.MarkAsBlack();
+
+            if (node.IsLeft())
+            {
+                sibling.Right.MarkAsBlack();
+                this.RotateLeft(parent);
+            }
+            else
+            {
+                sibling.Left.MarkAsBlack();
+                this.RotateRight(parent);
+            }
         }
 
         protected virtual void Insert(RBTNode<DataType> newNode)
@@ -191,9 +297,40 @@ namespace WG.Collections.Trees
 
         protected virtual void Remove(RBTNode<DataType> node)
         {
-            base.Remove(node);
+            if (node.HasBoth())
+            {
+                RBTNode<DataType> predecessor = node.GetPredecessor();
+                node.Element = predecessor.Element;
 
-            this.RemoveCase1(node);
+                this.Remove(predecessor);
+            }
+            else if (node.HasLeft())
+            {
+                node.Element = node.Left.Element;
+                this.Remove(node.Left);
+            }
+            else if (node.HasRight())
+            {
+                node.Element = node.Right.Element;
+                this.Remove(node.Right);
+            }
+            else
+            {
+                if (node.IsLeft())
+                {
+                    this.RemoveCase1(node);
+                    node.Parent.Left = null;
+                }
+                else if (node.IsRight())
+                {
+                    this.RemoveCase1(node);
+                    node.Parent.Right = null;
+                }
+                else
+                {
+                    this.Root = null;
+                }
+            }
         }
 
         protected new RBTNode<DataType> Get(DataType element)
@@ -222,7 +359,10 @@ namespace WG.Collections.Trees
             {
                 found = true;
                 this.Remove(node);
+
+                this.DecrementCount();
             }
+
             return found;
         }
     }

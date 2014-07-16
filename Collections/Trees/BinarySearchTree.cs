@@ -110,23 +110,22 @@ namespace WG.Collections.Trees
         /// <param name="node">The node to remove from the tree.</param>
         protected virtual void Remove(BTNode<DataType> node)
         {
-            BTNode<DataType> replacement = null;
-
             if (node.HasBoth())
             {
-                replacement = node.GetPredecessor();
+                BTNode<DataType> predecessor = node.GetPredecessor();
+                node.Element = predecessor.Element;
 
-                this.Remove(replacement);
+                this.Remove(predecessor);
             }
             else if (node.HasLeft())
             {
-                replacement = node.Left;
-                node.Left = null;
+                node.Element = node.Left.Element;
+                this.Remove(node.Left);
             }
             else if (node.HasRight())
             {
-                replacement = node.Right;
-                node.Right = null;
+                node.Element = node.Right.Element;
+                this.Remove(node.Right);
             }
             else
             {
@@ -142,11 +141,6 @@ namespace WG.Collections.Trees
                 {
                     this.Root = null;
                 }
-            }
-
-            if (replacement != null)
-            {
-                node.Element = replacement.Element;
             }
         }
 

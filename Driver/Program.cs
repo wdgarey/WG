@@ -10,16 +10,9 @@ namespace Driver
     {
         static void Main(string[] args)
         {
-            BinarySearchTree<Number> numbers = new BinarySearchTree<Number>();
-            Number[] array = new Number[] { new Number(10),  new Number(11), new Number(12) };
+            RBTDriver driver = new RBTDriver();
 
-            numbers.Enqueue(array[0]);
-            numbers.Remove(array[0]);
-
-
-            //RBTDriver driver = new RBTDriver();
-
-            //driver.Main();
+            driver.Main();
 
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");

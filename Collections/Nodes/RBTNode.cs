@@ -108,6 +108,15 @@ namespace WG.Collections.Nodes
         }
 
         /// <summary>
+        /// Colors this node the same color as the given node.
+        /// </summary>
+        /// <param name="node">The given node.</param>
+        public virtual void MarkAs(RBTNode<DataType> node)
+        {
+            this.Black = node.Black;
+        }
+
+        /// <summary>
         /// Gets the grand parent of this node.
         /// </summary>
         /// <returns>The grandparent node; or null if no grandparent exists.</returns>
@@ -127,6 +136,17 @@ namespace WG.Collections.Nodes
             BTNode<DataType> uncle = base.GetUncle();
 
             return (uncle as RBTNode<DataType>);
+        }
+
+        /// <summary>
+        /// Gets the sibling of the node.
+        /// </summary>
+        /// <returns>The sibling of the node; or null if there is no parent or sibling.</returns>
+        public new RBTNode<DataType> GetSibling()
+        {
+            BTNode<DataType> sibling = base.GetSibling();
+
+            return (sibling as RBTNode<DataType>);
         }
 
         /// <summary>

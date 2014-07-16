@@ -106,6 +106,30 @@ namespace Driver
             return found;
         }
 
+        /// <summary>
+        /// Adds the given number to the tree.
+        /// </summary>
+        /// <param name="number">The given number.</param>
+        public virtual void Add(Number number)
+        {
+            RedBlackTree<Number> rbt = this.RBT;
+
+            rbt.Enqueue(number);
+        }
+
+        /// <summary>
+        /// Remvoves the given number from the tree.
+        /// </summary>
+        /// <param name="number">The number to remove.</param>
+        public virtual bool Remove(Number number)
+        {
+            RedBlackTree<Number> rbt = this.RBT;
+
+            bool found = rbt.Remove(number);
+
+            return found;
+        }
+
         public virtual void ShowOptions()
         {
             Console.WriteLine("Enter \"0\" to exit the driver.");
@@ -113,6 +137,8 @@ namespace Driver
             Console.WriteLine("Enter \"2\" to search for a number.");
             Console.WriteLine("Enter \"3\" to get the minimum number.");
             Console.WriteLine("Enter \"4\" to get the maximum number.");
+            Console.WriteLine("Enter \"5\" to add a number to the tree.");
+            Console.WriteLine("Enter \"6\" to remov a number from the tree.");
         }
 
         public virtual int GetNumber()
@@ -162,6 +188,16 @@ namespace Driver
                     case 4:
                         Number max = this.GetMax();
                         Console.WriteLine("The largest number is: " + max.ToString());
+                        break;
+                    case 5:
+                         Console.WriteLine("Enter a number to add:");
+                         this.Add(new Number(this.GetNumber()));
+                        break;
+                    case 6:
+                        Console.WriteLine("Enter a number to remove:");
+                        int value = this.GetNumber();
+                        found = this.Remove(new Number(value));
+                        Console.WriteLine("The number, \"" + value.ToString() + "\", was " + (found ? "" : " NOT ") + "found.");
                         break;
                 }
             }

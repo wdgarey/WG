@@ -179,21 +179,34 @@ namespace WG.Collections.Nodes
         {
             BTNode<DataType> uncle = null;
             BTNode<DataType> parent = this.Parent;
-            BTNode<DataType> grandparent = this.GetGrandparent();
 
-            if (grandparent != null)
+            if (parent != null)
             {
-                if (parent == grandparent.Left)
-                {
-                    uncle = grandparent.Right;
-                }
-                else
-                {
-                    uncle = grandparent.Left;
-                }
+                uncle = parent.GetSibling();
             }
 
             return uncle;
+        }
+
+        /// <summary>
+        /// Gets the sibling of the node.
+        /// </summary>
+        /// <returns>The sibling of the node; or null if there is no parent or sibling.</returns>
+        public virtual BTNode<DataType> GetSibling()
+        {
+            BTNode<DataType> sibling = null;
+            BTNode<DataType> parent = this.Parent;
+
+            if (this.IsLeft())
+            {
+                sibling = parent.Right;
+            }
+            else if (this.IsRight())
+            {
+                sibling = parent.Left;
+            }
+
+            return sibling;
         }
 
         /// <summary>
