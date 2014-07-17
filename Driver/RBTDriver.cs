@@ -130,6 +130,9 @@ namespace Driver
             return found;
         }
 
+        /// <summary>
+        /// Shows the available driver options.
+        /// </summary>
         public virtual void ShowOptions()
         {
             Console.WriteLine("Enter \"0\" to exit the driver.");
@@ -141,6 +144,10 @@ namespace Driver
             Console.WriteLine("Enter \"6\" to remov a number from the tree.");
         }
 
+        /// <summary>
+        /// Gets a number from the user.
+        /// </summary>
+        /// <returns>The number that the user entered.</returns>
         public virtual int GetNumber()
         {
             int number;
@@ -153,6 +160,9 @@ namespace Driver
             return number;
         }
 
+        /// <summary>
+        /// The main method for the driver.
+        /// </summary>
         public virtual void Main()
         {
             bool run = true;

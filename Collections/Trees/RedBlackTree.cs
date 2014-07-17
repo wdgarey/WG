@@ -96,7 +96,10 @@ namespace WG.Collections.Trees
             node.Parent = left;
         }
 
-
+        /// <summary>
+        /// The new node doesn't have a parent so it is the root, just color it black.
+        /// </summary>
+        /// <param name="newNode">The newly added node.</param>
         protected void InsertCase1(RBTNode<DataType> newNode)
         {
             if (!newNode.HasParent())
@@ -109,6 +112,10 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// The new node has a parent, and the parent is red.
+        /// </summary>
+        /// <param name="newNode">The newly added node.</param>
         protected void InsertCase2(RBTNode<DataType> newNode)
         {
             if (newNode.Parent.IsRed())
@@ -117,6 +124,10 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newNode"></param>
         protected void InsertCase3(RBTNode<DataType> newNode)
         {
             RBTNode<DataType> uncle = newNode.GetUncle();
