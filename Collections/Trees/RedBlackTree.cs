@@ -125,9 +125,10 @@ namespace WG.Collections.Trees
         }
 
         /// <summary>
-        /// 
+        /// If the parent is red and the parents sibling is red, then
+        /// color the  grandparent red and the parent and uncle black.
         /// </summary>
-        /// <param name="newNode"></param>
+        /// <param name="newNode">The new node.</param>
         protected void InsertCase3(RBTNode<DataType> newNode)
         {
             RBTNode<DataType> uncle = newNode.GetUncle();
@@ -149,6 +150,14 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// If the parent is red, the uncle is black, and the node and parent
+        /// are "zig-zagged" then rotate them appropriately to put them in a straight
+        /// line. (Need to make sure it is a straight line here given the situation
+        /// so that in the next case we can rotate the straight line into a balanced
+        /// sub-tree of three.
+        /// </summary>
+        /// <param name="newNode">The new node.</param>
         protected void InsertCase4(RBTNode<DataType> newNode)
         {
             RBTNode<DataType> node = newNode;
@@ -170,6 +179,12 @@ namespace WG.Collections.Trees
             this.InsertCase5(node);
         }
 
+        /// <summary>
+        /// The node and the parent are in a straight line and the parent is red,
+        /// so marke the node black, the grandparent red, and finally rotate the node
+        /// appropriately so that a balanced sub-tree of three is made.
+        /// </summary>
+        /// <param name="node">The node to consider.</param>
         protected void InsertCase5(RBTNode<DataType> node)
         {
             RBTNode<DataType> grandparent = node.GetGrandparent();
@@ -188,9 +203,16 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// If the parent of the node that was removed is black and
+        /// the node is red then just color the node black. But if the
+        /// parent is black and the node to remove is black we need to
+        /// do more.
+        /// </summary>
+        /// <param name="node">The node to remove.</param>
         protected virtual void RemoveCase1(RBTNode<DataType> node)
         {
-            if (node.HasParent() && node.Parent.IsBlack())
+            if (!node.HasParent() || node.Parent.IsBlack())
             {
                 if (node.IsRed())
                 {
@@ -203,6 +225,11 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// If the node that is being removed is black and the parent is black, then
+        /// we need to do more.
+        /// </summary>
+        /// <param name="node">The node being removed.</param>
         protected virtual void RemoveCase2(RBTNode<DataType> node)
         {
             if (node.HasParent())
@@ -211,6 +238,12 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// If the node's parent is black, the node is black, and the node's
+        /// sibling is red, then color the parent red, mark the sibling as black,
+        /// and rotate the parent appropriately.
+        /// </summary>
+        /// <param name="node">The node being removed.</param>
         protected virtual void RemoveCase3(RBTNode<DataType> node)
         {
             RBTNode<DataType> sibling = node.GetSibling();
@@ -235,6 +268,13 @@ namespace WG.Collections.Trees
             this.RemoveCase4(node);
         }
 
+        /// <summary>
+        /// If the parent is black, the sibling is black, and the siblings children are black,
+        /// then mark the sibling as red (pushing the color problem up the tree) and start with
+        /// the parent. Else, if the same case applies but the parent is red then just color the
+        /// sibling red and the parent black. Otherwise there is more that needs to be done.
+        /// </summary>
+        /// <param name="node">The node being removed.</param>
         protected virtual void RemoveCase4(RBTNode<DataType> node)
         {
             RBTNode<DataType> parent = node.Parent;
@@ -256,6 +296,13 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// If the sibling is black, the node is left, the siblings right child is black and the
+        /// sibling's left child is red, color the sibling red and the left child black so that
+        /// you have a red node and two black nodes (or vice versa) and rotate the sibling. Otherwise there is more
+        /// that needs to be done.
+        /// </summary>
+        /// <param name="node">The node being removed.</param>
         protected virtual void RemoveCase5(RBTNode<DataType> node)
         {
             RBTNode<DataType> sibling = node.GetSibling();
@@ -279,6 +326,13 @@ namespace WG.Collections.Trees
             this.RemoveCase6(node);
         }
 
+        /// <summary>
+        /// If the node is left or right and the siblings children are the same
+        /// color then make the sibling teh same color as the parent and mark
+        /// the parent as black. And if the node is left color the sibling's
+        /// right child as black and rotate the parent left (or vice-versa).
+        /// </summary>
+        /// <param name="node">The node being removed.</param>
         protected virtual void RemoveCase6(RBTNode<DataType> node)
         {
             RBTNode<DataType> parent = node.Parent;
@@ -299,6 +353,10 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// Inserts the given node into the tree.
+        /// </summary>
+        /// <param name="newNode">The node to insert into the tree.</param>
         protected virtual void Insert(RBTNode<DataType> newNode)
         {
             base.Insert(newNode);
@@ -306,6 +364,10 @@ namespace WG.Collections.Trees
             this.InsertCase1(newNode);
         }
 
+        /// <summary>
+        /// Removes the given node from the tree.
+        /// </summary>
+        /// <param name="node">The node to remove.</param>
         protected virtual void Remove(RBTNode<DataType> node)
         {
             if (node.HasBoth())
@@ -344,6 +406,11 @@ namespace WG.Collections.Trees
             }
         }
 
+        /// <summary>
+        /// Gets the node containing the given element.
+        /// </summary>
+        /// <param name="element">The element of the node to get.</param>
+        /// <returns>The node containing the given element, or NULL if no node contains the given element.</returns>
         protected new RBTNode<DataType> Get(DataType element)
         {
             BTNode<DataType> node = base.Get(element);
@@ -351,6 +418,10 @@ namespace WG.Collections.Trees
             return (node as RBTNode<DataType>);
         }
 
+        /// <summary>
+        /// Adds and element to the tree.
+        /// </summary>
+        /// <param name="element">The element to add to the tree.</param>
         public override void Enqueue(DataType element)
         {
             RBTNode<DataType> node = new RBTNode<DataType>();
@@ -361,6 +432,11 @@ namespace WG.Collections.Trees
             this.IncrementCount();
         }
 
+        /// <summary>
+        /// Removes an element from the tree.
+        /// </summary>
+        /// <param name="element">The element to remove from the tree.</param>
+        /// <returns>True, if the element was found and removed.</returns>
         public override bool Remove(DataType element)
         {
             bool found = false;
