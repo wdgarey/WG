@@ -37,6 +37,7 @@
     <Compile Include="Nodes\RBTNode.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
     <Compile Include="Trees\RedBlackTree.cs" />
+    <Compile Include="Vectors\CircularBuffer.cs" />
     <Compile Include="Vectors\Heap.cs" />
     <Compile Include="Vectors\MaxHeap.cs" />
     <Compile Include="Vectors\MinHeap.cs" />
