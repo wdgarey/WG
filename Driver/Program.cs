@@ -1,6 +1,6 @@
 ﻿using System;
 
-using WG.Collections.Vectors;
+using WG.Collections.Trees;
 
 namespace Driver
 {
@@ -8,21 +8,31 @@ namespace Driver
     {
         static void Main(string[] args)
         {
+            int count = 100000;
+            Number number = null;
             Random rnd = new Random();
-            Number[] array = new Number[100];
-            for (int index = 0; index < array.Length; index++)
+
+            RedBlackTree<Number> tree = new RedBlackTree<Number>();
+
+            int value;
+            while(int.TryParse(Console.ReadLine(), out value))
             {
-                array[index] = new Number(rnd.Next(array.Length));
+                number = new Number(value);
+                tree.Enqueue(number);
+            }
+            
+            while (int.TryParse(Console.ReadLine(), out value))
+            {
+                number = new Number(value);
+                tree.Remove(number);
             }
 
-            Heap<Number> heap = new MaxHeap<Number>(array);
+            Number[] array = tree.GetInOrder();
 
-            int count = 1;
-            Number number = null;
-            while (heap.Dequeue(out number))
-            {   
-                Console.WriteLine(count + ": " + number.ToString());
-                count++;
+            int position = 1;
+            foreach (Number n in array)
+            {
+                //Console.WriteLine(position + ": " + n.ToString());
             }
 
             Console.WriteLine();

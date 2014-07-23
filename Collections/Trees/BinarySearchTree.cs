@@ -289,12 +289,17 @@ namespace WG.Collections.Trees
         /// <returns>The array of ordered elements.</returns>
         public virtual DataType[] GetInOrder()
         {
-            int startIndex = 0;
             int count = this.Count;
-            BTNode<DataType> root = this.Root;
             DataType[] elements = new DataType[count];
 
-            this.GetInOrder(root, ref startIndex, elements);
+            if (!this.IsEmpty())
+            {
+                int startIndex = 0;
+
+                BTNode<DataType> root = this.Root;
+
+                this.GetInOrder(root, ref startIndex, elements);
+            }
 
             return elements;
         }
