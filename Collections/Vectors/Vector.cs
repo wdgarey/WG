@@ -42,19 +42,12 @@ namespace WG.Collections.Vectors
         }
 
         /// <summary>
-        /// Accessor to the number of elements that can be stored in the vector.
-        /// </summary>
-        public override int Count
-        {
-            get { return this.Size; }
-        }
-
-        /// <summary>
         /// Creates an instance of a vector.
         /// </summary>
         public Vector()
         {
             this.Elements = new DataType[0];
+            this.Count = 0;
         }
 
         /// <summary>
@@ -64,6 +57,17 @@ namespace WG.Collections.Vectors
         public Vector(int initSize)
         {
             this.Elements = new DataType[initSize];
+            this.Count = initSize;
+        }
+
+        /// <summary>
+        /// Creates an instance of a Vector.
+        /// </summary>
+        /// <param name="elements">The collection of elements that will make up the vector.</param>
+        public Vector(DataType[] elements)
+        {
+            this.Elements = elements;
+            this.Count = elements.Length;
         }
 
         /// <summary>
@@ -114,10 +118,13 @@ namespace WG.Collections.Vectors
                 }
 
                 this.Elements = newElements;
+
+                this.Count = count;
             }
             catch (OutOfMemoryException ex)
             {
                 success = false;
+                Console.WriteLine(ex.ToString());
             }
 
             return success;

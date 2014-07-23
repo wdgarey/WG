@@ -48,8 +48,7 @@ namespace WG.Collections.Vectors
         public Heap(DataType[] elements)
             : base()
         {
-            HeapVector<DataType> nodes = new HeapVector<DataType>();
-            nodes.Resize(elements.Length);
+            HeapNode<DataType>[] nodes = new HeapNode<DataType>[elements.Length];
 
             for (int index = 0; index < elements.Length; index++)
             {
@@ -59,10 +58,10 @@ namespace WG.Collections.Vectors
                 newNode.Element = element;
                 newNode.Index = index;
 
-                nodes.Add(newNode);
+                nodes[index] = newNode;
             }
 
-            this.Nodes = nodes;
+            this.Nodes = new HeapVector<DataType>(nodes);
 
             this.Heapify();
         }

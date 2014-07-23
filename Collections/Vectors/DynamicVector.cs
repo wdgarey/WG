@@ -9,35 +9,19 @@ namespace WG.Collections.Vectors
     public class DynamicVector<DataType> : Vector<DataType>
     {
         /// <summary>
-        /// The index to add a new element at.
-        /// </summary>
-        private int next;
-
-        /// <summary>
-        /// Accessor to the the index to add a new element at.
-        /// </summary>
-        protected virtual int Next
-        {
-            get { return this.next; }
-            set { this.next = value; }
-        }
-
-        /// <summary>
-        /// The number of elements that have been added to the vector.
-        /// </summary>
-        public override int Count
-        {
-            get { return this.Next; }
-        }
-
-        /// <summary>
         /// Creates an instance of a DynamicVector.
         /// </summary>
         public DynamicVector()
             : base(0)
-        {
-            this.Next = 0;
-        }
+        { }
+
+        /// <summary>
+        /// Creates an instance of a DynamicVector.
+        /// </summary>
+        /// <param name="elements">The elements that will make up the dynamic vector.</param>
+        public DynamicVector(DataType[] elements)
+            : base(elements)
+        { }
 
         /// <summary>
         /// Shifts all the elements past the given index one place foward, overwritting the element at the given index.
@@ -45,9 +29,9 @@ namespace WG.Collections.Vectors
         /// <param name="index">The index to starting shifting foward at.</param>
         protected virtual void ShiftFoward(int index)
         {
-            int next = this.Next;
+            int count = this.Count;
 
-            for (int position = index; position < next; position++)
+            for (int position = index; position < count - 1; position++)
             {
                 int nextPos = position + 1;
 
@@ -65,7 +49,7 @@ namespace WG.Collections.Vectors
         /// <param name="index">The index to start shifting the elements back at.</param>
         protected virtual void ShiftBack(int index)
         {
-            int next = this.Next;
+            int next = this.Count;
 
             this.Grow();
 
@@ -93,7 +77,7 @@ namespace WG.Collections.Vectors
                 downSize = this.Resize(halfSize);
             }
 
-            this.Next = count;
+            this.Count = count;
 
             return downSize;
         }
@@ -118,7 +102,7 @@ namespace WG.Collections.Vectors
                 upSize = this.Resize(newSize);
             }
 
-            this.Next = count;
+            this.Count = count;
 
             return upSize;
         }
@@ -129,7 +113,7 @@ namespace WG.Collections.Vectors
         /// <param name="element">The element to add.</param>
         public virtual void Add(DataType element)
         {
-            int next = this.Next;
+            int next = this.Count;
 
             this.Grow();
 

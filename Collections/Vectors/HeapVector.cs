@@ -18,6 +18,14 @@ namespace WG.Collections.Vectors
         { }
 
         /// <summary>
+        /// Creates an instance of a HeapVector.
+        /// </summary>
+        /// <param name="nodes">The nodes that will make up the vector.</param>
+        public HeapVector(HeapNode<DataType>[] nodes)
+            : base(nodes)
+        { }
+
+        /// <summary>
         /// Set the first node in the vector to the given vector.
         /// </summary>
         /// <param name="first">The node to put first.</param>
