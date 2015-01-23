@@ -27,7 +27,6 @@ namespace WG.Collections.Trees
             : base()
         { }
 
-
         /// <summary>
         /// Rotates a subtree to the left.
         /// </summary>

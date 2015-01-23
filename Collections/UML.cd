@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WG.Collections.Collection" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAEBAAAAAQAAAAIAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Collection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Linked.Linked&lt;DataType&gt;" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQBMEEMAABAAAABAAAAABAAAAAAYAAAAAAAAAQAQAAg=</HashCode>
+      <FileName>Linked\Linked.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Linked.List&lt;DataType&gt;" Collapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAABAAAAABAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Linked\List.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Linked.Queue&lt;DataType&gt;" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Linked\Queue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Linked.Stack&lt;DataType&gt;" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAACAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Linked\Stack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Nodes.BTNode&lt;DataType&gt;" Collapsed="true">
+    <Position X="4" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAQAACAAAAAQAAAQAAAFIAIAEBQCACAAEAAgAA=</HashCode>
+      <FileName>Nodes\BTNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Nodes.ChildNode&lt;DataType&gt;" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAACQAAAEAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Nodes\ChildNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Nodes.HeapNode&lt;DataType&gt;" Collapsed="true">
+    <Position X="6.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAEgAAABAAA=</HashCode>
+      <FileName>Nodes\HeapNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Nodes.LinkedNode&lt;DataType&gt;" Collapsed="true">
+    <Position X="8.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Nodes\LinkedNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Nodes.Node&lt;DataType&gt;" Collapsed="true">
+    <Position X="6.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAgAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Nodes\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Nodes.RBTNode&lt;DataType&gt;" Collapsed="true">
+    <Position X="4" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAUBAAAAAAAAAAEAAAAUAiAFAAAAEAQCACAQAAABAA=</HashCode>
+      <FileName>Nodes\RBTNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Trees.BinarySearchTree&lt;DataType&gt;" Collapsed="true">
+    <Position X="14" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBAAEAAAAAAACBAAAAgBAAAACAAAAAAAAAAABAgAAA=</HashCode>
+      <FileName>Trees\BinarySearchTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Trees.RedBlackTree&lt;DataType&gt;" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAJAAEAgAAkAACBQCkAABAAAAQAAAAAAQAAgAAAAIAA=</HashCode>
+      <FileName>Trees\RedBlackTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.CircularBuffer&lt;DataType&gt;" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAIAAgRAAAAMQAECAAAAAAAAIAAAAAAJAAAA=</HashCode>
+      <FileName>Vectors\CircularBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.DynamicVector&lt;DataType&gt;" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEABCAACAAAAAAAABAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Vectors\DynamicVector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.Heap&lt;DataType&gt;" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABgAAAAAAAAAAAABIEAAAQAAAAABAAAAAAAAABgIAA=</HashCode>
+      <FileName>Vectors\Heap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.HeapVector&lt;DataType&gt;" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQAAA=</HashCode>
+      <FileName>Vectors\HeapVector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.MaxHeap&lt;DataType&gt;" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Vectors\MaxHeap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.MinHeap&lt;DataType&gt;" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Vectors\MinHeap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WG.Collections.Vectors.Vector&lt;DataType&gt;" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAhBBACAAQAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Vectors\Vector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="WG.Collections.Interfaces.IRelatable&lt;DataType&gt;" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Interfaces\IRelatable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

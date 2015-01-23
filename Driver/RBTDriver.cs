@@ -11,9 +11,23 @@ namespace Driver
     public class RBTDriver
     {
         /// <summary>
+        /// The random number generator.
+        /// </summary>
+        private Random rnd;
+
+        /// <summary>
         /// The Red-Black tree.
         /// </summary>
         private RedBlackTree<Number> rbt;
+
+        /// <summary>
+        /// Accessor to the random number generator.
+        /// </summary>
+        public Random Rnd
+        {
+            get { return this.rnd; }
+            set { this.rnd = value; }
+        }
 
         /// <summary>
         /// Accessor to the Red-Black tree.
@@ -29,11 +43,12 @@ namespace Driver
         /// </summary>
         public RBTDriver()
         {
+            this.Rnd = new Random();
             this.RBT = new RedBlackTree<Number>();
         }
 
         /// <summary>
-        /// Populates the tree with random numbers until the given flag is set to TRUE.
+        /// Populates the tree with numbers until the given flag is set to TRUE.
         /// </summary>
         /// <param name="stop">The given flag.</param>
         public virtual void PopulateTree(ref bool stop)
@@ -44,6 +59,7 @@ namespace Driver
             {
                 Number start = null;
                 rbt.GetMax(out start);
+                value = start.Value;
             }
 
             while (!stop)
