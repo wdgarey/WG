@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Collections.Generic;
 
-namespace LiftTracker
+namespace WG.Xml
 {
     /// <summary>
     /// An object that can be represented using XML.

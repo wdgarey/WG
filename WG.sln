@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver", "Driver\Driver.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xml", "Xml\Xml.csproj", "{BAD58B51-663C-484A-AAFE-6B4645F49426}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{0EBE7843-4232-4A51-9995-1466A35F3005}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BAD58B51-663C-484A-AAFE-6B4645F49426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD58B51-663C-484A-AAFE-6B4645F49426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD58B51-663C-484A-AAFE-6B4645F49426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBE7843-4232-4A51-9995-1466A35F3005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EBE7843-4232-4A51-9995-1466A35F3005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EBE7843-4232-4A51-9995-1466A35F3005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EBE7843-4232-4A51-9995-1466A35F3005}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

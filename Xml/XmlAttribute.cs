@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LiftTracker
+namespace WG.Xml
 {
     /// <summary>
     /// An XML attribute name-value pair.
