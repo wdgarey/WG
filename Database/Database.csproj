@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.3.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,13 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\Conditions\AndCondition.cs" />
+    <Compile Include="Attributes\Attribute.cs" />
+    <Compile Include="Clauses\AttributeClause.cs" />
+    <Compile Include="Clauses\Clause.cs" />
+    <Compile Include="Attributes\Conditions\Condition.cs" />
     <Compile Include="DbConnectionInfo.cs" />
+    <Compile Include="DbObj.cs" />
+    <Compile Include="Clauses\FromClause.cs" />
+    <Compile Include="Clauses\JoinClause.cs" />
+    <Compile Include="Attributes\Conditions\OrCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Clauses\SelectClause.cs" />
+    <Compile Include="Statements\SelectStatement.cs" />
+    <Compile Include="Attributes\SqlAttribute.cs" />
+    <Compile Include="Statements\Statement.cs" />
+    <Compile Include="Clauses\WhereClause.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sqlconnection.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)references\MySql.Data.dll" "$(ProjectDir)$(OutDir)" /Y /I</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

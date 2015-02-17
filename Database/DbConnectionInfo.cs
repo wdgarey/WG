@@ -1,4 +1,7 @@
 ﻿using System.Text;
+using System.Collections.Generic;
+
+using WG.Database.Attributes;
 
 namespace WG.Database
 {
@@ -64,21 +67,27 @@ namespace WG.Database
         }
 
         /// <summary>
+        /// Creates an instance of Db Connection Info.
+        /// </summary>
+        /// <param name="server">The server that the database is on.</param>
+        /// <param name="userName">The username of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <param name="database">The name of the database.</param>
+        public DbConnectionInfo(string server, string userName, string password, string database)
+        {
+            this.Server = server;
+            this.UserName = userName;
+            this.Password = password;
+            this.Database = database;
+        }
+
+        /// <summary>
         /// Gets the character used to separate the name value pairs of the connection string.
         /// </summary>
         /// <returns>The separator character.</returns>
         protected virtual char GetSeparatorChar()
         {
             return ';';
-        }
-
-        /// <summary>
-        /// Gets the character used to assign a value to a paramter name in the connection string.
-        /// </summary>
-        /// <returns>The assignment character.</returns>
-        protected virtual char GetAssignmentChar()
-        {
-            return '=';
         }
 
         /// <summary>
@@ -118,26 +127,10 @@ namespace WG.Database
         }
 
         /// <summary>
-        /// Gets the name value pair.
+        /// Gets the collection of connection attributes.
         /// </summary>
-        /// <param name="variable">The variable name.</param>
-        /// <param name="value">The value.</param>
-        /// <returns>The name value pair.</returns>
-        protected virtual string GetNameValuePair(string variable, string value)
-        {
-            char separatorChar = this.GetSeparatorChar();
-            char assignmentChar = this.GetAssignmentChar();
-
-            string nameValPair = variable + assignmentChar + separatorChar + value + separatorChar;
-
-            return nameValPair;
-        }
-
-        /// <summary>
-        /// Gets the connection string.
-        /// </summary>
-        /// <returns>The connection string.</returns>
-        public virtual string ToConnectionString()
+        /// <returns>The collection of connection attributes.</returns>
+        protected virtual List<Attribute> GetAttributes()
         {
             string serverVal = this.Server;
             string userNameVal = this.UserName;
@@ -147,11 +140,30 @@ namespace WG.Database
             string userNameVar = this.GetUserNameVar();
             string passwordVar = this.GetPasswordVar();
             string databaseVar = this.GetDatabaseVar();
+            List<Attribute> attributes = new List<Attribute>();
 
-            string connStr = this.GetNameValuePair(serverVar, serverVal);
-            connStr += this.GetNameValuePair(userNameVar, userNameVal);
-            connStr += this.GetNameValuePair(passwordVar, passwordVal);
-            connStr += this.GetNameValuePair(databaseVar, databaseVal);
+            attributes.Add(new Attribute(serverVal, serverVar));
+            attributes.Add(new Attribute(userNameVal, userNameVar));
+            attributes.Add(new Attribute(passwordVal, passwordVar));
+            attributes.Add(new Attribute(databaseVal, databaseVar));
+
+            return attributes;
+        }
+
+        /// <summary>
+        /// Gets the connection string.
+        /// </summary>
+        /// <returns>The connection string.</returns>
+        public virtual string ToConnectionString()
+        {
+            string connStr = "";
+            char separatorChar = this.GetSeparatorChar();
+            List<Attribute> attributes = this.GetAttributes();
+
+            foreach (Attribute attribute in attributes)
+            {
+                connStr += attribute.ToString() + separatorChar;
+            }
 
             return connStr;
         }
