@@ -15,7 +15,7 @@ namespace WG.Database.Attributes
         /// <summary>
         /// The value of the attribute.
         /// </summary>
-        private string value;
+        private object value;
 
         /// <summary>
         /// Gets or sets the name of the attribute.
@@ -29,7 +29,7 @@ namespace WG.Database.Attributes
         /// <summary>
         /// Gets or sets the value of the attribute.
         /// </summary>
-        public virtual string Value
+        public virtual object Value
         {
             get { return this.value; }
             set { this.value = value; }
@@ -50,7 +50,7 @@ namespace WG.Database.Attributes
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
         /// <param name="value">The value of the attribute.</param>
-        public Attribute(string name, string value)
+        public Attribute(string name, object value)
         {
             this.Name = name;
             this.Value = value;
@@ -71,7 +71,7 @@ namespace WG.Database.Attributes
         /// <returns>True, if the attribute has a value.</returns>
         public virtual bool HasValue()
         {
-            string value = this.Value;
+            object value = this.Value;
             bool hasValue = (value != null);
 
             return hasValue;
@@ -87,7 +87,7 @@ namespace WG.Database.Attributes
 
             if (this.HasValue())
             {
-                string value = this.Value;
+                object value = this.Value;
                 string separatorStr = this.GetNameValueSepStr();
 
                 representation += separatorStr + value;

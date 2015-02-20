@@ -55,13 +55,12 @@
     <Compile Include="Attributes\Conditions\OrCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clauses\SelectClause.cs" />
+    <Compile Include="Statements\NonQueryStatement.cs" />
+    <Compile Include="Statements\QueryStatement.cs" />
     <Compile Include="Statements\SelectStatement.cs" />
     <Compile Include="Attributes\SqlAttribute.cs" />
     <Compile Include="Statements\Statement.cs" />
     <Compile Include="Clauses\WhereClause.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="sqlconnection.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

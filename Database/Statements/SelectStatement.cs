@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 using WG.Database.Clauses;
 
@@ -7,7 +8,7 @@ namespace WG.Database.Statements
     /// <summary>
     /// An objec that represents an SQL select statement.
     /// </summary>
-    public class SelectStatement : Statement
+    public class SelectStatement : QueryStatement
     {
         /// <summary>
         /// The select clause.
@@ -64,6 +65,19 @@ namespace WG.Database.Statements
         }
 
         /// <summary>
+        /// Creates an instance of a select statement.
+        /// </summary>
+        /// <param name="select">The select clause.</param>
+        /// <param name="from">The from clause.</param>
+        /// <param name="where">The where clause.</param>
+        public SelectStatement(SelectClause select, FromClause from, WhereClause where)
+        {
+            this.Select = select;
+            this.From = from;
+            this.Where = where;
+        }
+
+        /// <summary>
         /// Indicates whether or not there exists a select clause.
         /// </summary>
         /// <returns>True, if the clause exists.</returns>
@@ -102,9 +116,29 @@ namespace WG.Database.Statements
             return hasWhereClause;
         }
 
+        /// <summary>
+        /// Creates and returns the string representation of the select statement.
+        /// </summary>
+        /// <returns>The string representation.</returns>
         protected override string CreateString()
         {
-            throw new NotImplementedException();
+            SelectClause select = this.Select;
+            FromClause from = this.From;
+            
+            StringBuilder sb = new StringBuilder();
+            sb.Append(select.ToString());
+            sb.Append(" ");
+            sb.Append(from.ToString());
+
+            if(this.HasWhereClause())
+            {
+                WhereClause where = this.Where;
+
+                sb.Append(" ");
+                sb.Append(where.ToString());
+            }
+
+            return sb.ToString();
         }
     }
 }

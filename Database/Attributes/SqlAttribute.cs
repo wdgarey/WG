@@ -69,7 +69,7 @@ namespace WG.Database.Attributes
         /// <param name="name">The name of the attribute.</param>
         /// <param name="table">The name of the table that the attribute belongs to.</param>
         /// <param name="value">The value of the attribute.</param>
-        public SqlAttribute(string name, string table, string value)
+        public SqlAttribute(string name, string table, object value)
             : base(name, value)
         {
             this.Table = table;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 
 using MySql.Data.MySqlClient;
@@ -141,9 +142,19 @@ namespace WG.Database
             return clause;
         }
 
-        protected virtual SelectStatement GetSelectStatement()
+        /// <summary>
+        /// Creates an returns the select statement for the object.
+        /// </summary>
+        /// <returns>The select statement.</returns>
+        protected virtual SelectStatement CreateSelectStatement()
         {
-            return null;
+            SelectClause select = this.CreateSelectClause();
+            FromClause from = this.CreateFromClause();
+            WhereClause where = this.CreateWhereClause();
+
+            SelectStatement statement = new SelectStatement(select, from, where);
+
+            return statement;
         }
 
         /// <summary>
@@ -165,27 +176,32 @@ namespace WG.Database
         /// <returns>True, on success.</returns>
         public virtual bool Select()
         {
-            bool success = true;
-            MySqlConnection connection = this.GetConnection();
-            MySqlCommand command = new MySqlCommand();
+            DbConnectionInfo dci = this.Dci;
+            string table = this.GetTableName();
+            SelectStatement statement = this.CreateSelectStatement();
+            List<SqlAttribute> attributes = new List<SqlAttribute>();
 
-            try
+            DataTable dt = statement.Execute(dci);
+            DataRow dr = dt.Rows[0];
+            
+            foreach(DataColumn dc in dt.Columns)
             {
-                connection.Open();
-            }
-            catch(Exception ex)
-            {
-                success = false;
-                Console.WriteLine(ex.ToString());
+                object value = dr[dc];
+
+                SqlAttribute attribute = new SqlAttribute(dc.ColumnName, table, value);
+
+                attributes.Add(attribute);
             }
 
-            return success;
+            this.SetAttributes(attributes);
+
+            return true;
         }
 
         /// <summary>
         /// Inserts the database object to the database using it's I.D..
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True, on success.</returns>
         public virtual bool Insert()
         {
             return true;
