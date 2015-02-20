@@ -16,19 +16,14 @@ namespace WG.Database.Clauses
         private string type;
 
         /// <summary>
-        /// The name of the table.
+        /// The name of the table to join.
         /// </summary>
         private string table;
 
         /// <summary>
-        /// The first attribute in the "on" condition.
+        /// The attribute of the "on" condition.
         /// </summary>
-        private SqlAttribute attribute1;
-
-        /// <summary>
-        /// The second attribute in the "on" condition.
-        /// </summary>
-        private SqlAttribute attribute2;
+        private SqlAttribute attribute;
 
         /// <summary>
         /// Gets or sets the type of join.
@@ -49,34 +44,24 @@ namespace WG.Database.Clauses
         }
 
         /// <summary>
-        /// Gets or sets the first attribute in the "on" condition.
+        /// Gets or sets the attribute of the "on" condition.
         /// </summary>
-        public virtual SqlAttribute Attribute1
+        public virtual SqlAttribute Attribute
         {
-            get { return this.attribute1; }
-            set { this.attribute1 = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the second attribute in the "on" condition.
-        /// </summary>
-        public virtual SqlAttribute Attribute2
-        {
-            get { return this.attribute2; }
-            set { this.attribute2 = value; }
+            get { return this.attribute; }
+            set { this.attribute = value; }
         }
 
         /// <summary>
         /// Creates an instance of a join clause.
         /// </summary>
         /// <param name="type">The type of join.</param>
-        public JoinClause(string type, string table, SqlAttribute attribute1, SqlAttribute attribute2)
+        public JoinClause(string type, string table, SqlAttribute attribute)
             : base("JOIN")
         {
             this.Type = type;
             this.Table = table;
-            this.Attribute1 = attribute1;
-            this.Attribute2 = attribute2;
+            this.Attribute = attribute;
         }
 
         /// <summary>
@@ -89,15 +74,6 @@ namespace WG.Database.Clauses
         }
 
         /// <summary>
-        /// Gets and returns the attribute separator string.
-        /// </summary>
-        /// <returns>The separator string.</returns>
-        protected virtual string GetAttributeSepStr()
-        {
-            return "=";
-        }
-
-        /// <summary>
         /// Creates the string representation of the join clause.
         /// </summary>
         /// <returns>The string representation.</returns>
@@ -107,9 +83,7 @@ namespace WG.Database.Clauses
             string table = this.Table;
             string keyWord = this.KeyWord;
             string onKeyWord = this.GetOnKeyWord();
-            string attrSepStr = this.GetAttributeSepStr();
-            SqlAttribute attribute1 = this.Attribute1;
-            SqlAttribute attribute2 = this.Attribute2;
+            SqlAttribute attribute = this.Attribute;
             StringBuilder sb = new StringBuilder("");
 
             sb.Append(type);
@@ -120,11 +94,7 @@ namespace WG.Database.Clauses
             sb.Append(" ");
             sb.Append(onKeyWord);
             sb.Append(" ");
-            sb.Append(attribute1.Name);
-            sb.Append(" ");
-            sb.Append(attrSepStr);
-            sb.Append(" ");
-            sb.Append(Attribute2.Name);
+            sb.Append(attribute.ToString());
 
             return sb.ToString();
         }

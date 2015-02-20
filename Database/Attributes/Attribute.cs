@@ -78,6 +78,14 @@ namespace WG.Database.Attributes
         }
 
         /// <summary>
+        /// Clears the currently stored value.
+        /// </summary>
+        public virtual void ClearValue()
+        {
+            this.Value = null;
+        }
+
+        /// <summary>
         /// Gets the string representation of the attribute.
         /// </summary>
         /// <returns>The string representation.</returns>
