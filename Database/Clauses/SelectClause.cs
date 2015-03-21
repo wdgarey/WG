@@ -45,12 +45,30 @@ namespace WG.Database.Clauses
         }
 
         /// <summary>
+        /// Gets and returns the opening delimiter string.
+        /// </summary>
+        /// <returns>The opening delimiter string.</returns>
+        protected override string GetOpenDelimiterStr()
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Gets and returns the closing delimiter string.
+        /// </summary>
+        /// <returns>The closing delimiter string.</returns>
+        protected override string GetCloseDelimiterStr()
+        {
+            return "";
+        }
+
+        /// <summary>
         /// Creates the string representation of the select clause.
         /// </summary>
         /// <returns>The string representation.</returns>
         protected override string CreateString()
         {
-            string representation = this.CreateString();
+            string representation = base.CreateString();
 
             if(!this.HasAttributes())
             {

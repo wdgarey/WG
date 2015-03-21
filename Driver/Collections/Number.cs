@@ -2,7 +2,7 @@
 
 using WG.Collections.Interfaces;
 
-namespace Driver
+namespace Driver.Collections
 {
     /// <summary>
     /// A number.

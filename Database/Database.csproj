@@ -29,6 +29,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.3.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,6 +51,12 @@
     <Compile Include="Clauses\AttributeClause.cs" />
     <Compile Include="Clauses\Clause.cs" />
     <Compile Include="Attributes\Conditions\Condition.cs" />
+    <Compile Include="Clauses\DeleteClause.cs" />
+    <Compile Include="Clauses\InsertClause.cs" />
+    <Compile Include="Clauses\SetClause.cs" />
+    <Compile Include="Clauses\UpdateClause.cs" />
+    <Compile Include="Clauses\Values.cs" />
+    <Compile Include="Clauses\ValuesClause.cs" />
     <Compile Include="DbConnectionInfo.cs" />
     <Compile Include="DbObj.cs" />
     <Compile Include="Clauses\FromClause.cs" />
@@ -55,16 +64,23 @@
     <Compile Include="Attributes\Conditions\OrCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clauses\SelectClause.cs" />
+    <Compile Include="Statements\DeleteStatement.cs" />
+    <Compile Include="Statements\InsertStatement.cs" />
     <Compile Include="Statements\NonQueryStatement.cs" />
     <Compile Include="Statements\QueryStatement.cs" />
     <Compile Include="Statements\SelectStatement.cs" />
     <Compile Include="Attributes\SqlAttribute.cs" />
     <Compile Include="Statements\Statement.cs" />
     <Compile Include="Clauses\WhereClause.cs" />
+    <Compile Include="Statements\UpdateStatement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)references\MySql.Data.dll" "$(ProjectDir)$(OutDir)" /Y /I</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

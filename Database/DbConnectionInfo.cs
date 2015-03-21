@@ -142,10 +142,10 @@ namespace WG.Database
             string databaseVar = this.GetDatabaseVar();
             List<Attribute> attributes = new List<Attribute>();
 
-            attributes.Add(new Attribute(serverVal, serverVar));
-            attributes.Add(new Attribute(userNameVal, userNameVar));
-            attributes.Add(new Attribute(passwordVal, passwordVar));
-            attributes.Add(new Attribute(databaseVal, databaseVar));
+            attributes.Add(new Attribute(serverVar, serverVal));
+            attributes.Add(new Attribute(userNameVar, userNameVal));
+            attributes.Add(new Attribute(passwordVar, passwordVal));
+            attributes.Add(new Attribute(databaseVar, databaseVal));
 
             return attributes;
         }

@@ -66,6 +66,63 @@ namespace WG.Database.Attributes
         }
 
         /// <summary>
+        /// Gets the value delimiter for an SQL attribute.
+        /// </summary>
+        /// <returns>The value deliter.</returns>
+        protected virtual string GetValueDelimterStr()
+        {
+            return "'";
+        }
+
+        /// <summary>
+        /// Indicates whether or not the name of the given attribute is the same as this one.
+        /// </summary>
+        /// <param name="attribute">The given attribute.</param>
+        /// <returns>True, if the name is equal.</returns>
+        protected virtual bool IsNameEqual(Attribute attribute)
+        {
+            string myName = this.Name;
+            string theirName = attribute.Name;
+
+            bool isEqual = myName.Equals(theirName);
+
+            return isEqual;
+        }
+
+        /// <summary>
+        /// Indicates whether or not the value of the given attribute is the same as this one.
+        /// </summary>
+        /// <param name="attribute">The given attribute.</param>
+        /// <returns>True, if the value is equal.</returns>
+        protected virtual bool IsValueEqual(Attribute attribute)
+        {
+            object myValue = this.Value;
+            object theirValue = attribute.Value;
+
+            bool isEqual = myValue.Equals(theirValue);
+
+            return isEqual;
+        }
+
+        /// <summary>
+        /// Gets the string representation of the value.
+        /// </summary>
+        /// <returns>The string representation.</returns>
+        public virtual string GetValueStr()
+        {
+            object value = this.Value;
+            string valueStr = value.ToString();
+            string valueDelimStr = this.GetValueDelimterStr();
+
+            if (value is ValueType || value is string)
+            {
+                valueStr = valueDelimStr + valueStr + valueDelimStr;
+            }
+
+            return valueStr;
+        }
+
+        /// <summary>
         /// Indicates whether or not the attribute has a value.
         /// </summary>
         /// <returns>True, if the attribute has a value.</returns>
@@ -75,6 +132,30 @@ namespace WG.Database.Attributes
             bool hasValue = (value != null);
 
             return hasValue;
+        }
+
+        /// <summary>
+        /// Indicates whether or not the given attribute is the same.
+        /// </summary>
+        /// <param name="attribute">The given attribute.</param>
+        /// <returns>True, if the given attribute is the same.</returns>
+        public virtual bool IsEqual(Attribute attribute)
+        {
+            bool isEqual = this.IsNameEqual(attribute);
+
+            return isEqual;
+        }
+
+        /// <summary>
+        /// Indicates whether or not the given attribute is exactly the same.
+        /// </summary>
+        /// <param name="attribute">The given attribute.</param>
+        /// <returns>True, if the given attribute is exactly the same.</returns>
+        public virtual bool IsExactEqual(Attribute attribute)
+        {
+            bool isExactEqual = (this.IsNameEqual(attribute) && this.IsValueEqual(attribute));
+
+            return isExactEqual;
         }
 
         /// <summary>
@@ -95,10 +176,10 @@ namespace WG.Database.Attributes
 
             if (this.HasValue())
             {
-                object value = this.Value;
+                string valueStr = this.GetValueStr();
                 string separatorStr = this.GetNameValueSepStr();
-
-                representation += separatorStr + value;
+                
+                representation += separatorStr + valueStr;
             }
 
             return representation;

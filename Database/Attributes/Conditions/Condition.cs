@@ -20,10 +20,28 @@ namespace WG.Database.Attributes.Conditions
         { }
 
         /// <summary>
-        /// Gets and retusn the separator string for a condition clause.
+        /// Gets and returns the separator string for a condition clause.
         /// </summary>
         /// <returns>The separator string.</returns>
         protected override string GetSeparatorStr()
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Gets and returns the opening delimiter string.
+        /// </summary>
+        /// <returns>The opening delimiter string.</returns>
+        protected override string GetOpenDelimiterStr()
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Gets and returns the closing delimiter string.
+        /// </summary>
+        /// <returns>The closing delimiter string.</returns>
+        protected override string GetCloseDelimiterStr()
         {
             return "";
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Data;
 using System.Collections.Generic;
 
@@ -143,18 +144,44 @@ namespace WG.Database
         }
 
         /// <summary>
-        /// Creates an returns the select statement for the object.
+        /// Creates and returns an insert clause for the database object.
         /// </summary>
-        /// <returns>The select statement.</returns>
-        protected virtual SelectStatement CreateSelectStatement()
+        /// <returns>The insert clause.</returns>
+        protected virtual InsertClause CreateInsertClause()
         {
-            SelectClause select = this.CreateSelectClause();
-            FromClause from = this.CreateFromClause();
-            WhereClause where = this.CreateWhereClause();
+            string table = this.GetTableName();
+            List<SqlAttribute> attributes = this.GetAttributes();
 
-            SelectStatement statement = new SelectStatement(select, from, where);
+            InsertClause clause = new InsertClause(table, attributes);
 
-            return statement;
+            return clause;
+        }
+
+        /// <summary>
+        /// Creates and returns an update clause.
+        /// </summary>
+        /// <returns>The update clause.</returns>
+        protected virtual UpdateClause CreateUpdateClause()
+        {
+            string table = this.GetTableName();
+            List<SqlAttribute> attributes = this.GetAttributes();
+
+            SetClause setClause = new SetClause(attributes);
+
+            UpdateClause updateClause = new UpdateClause(table, setClause);
+
+            return updateClause;
+        }
+
+        /// <summary>
+        /// Creates and returns a delete clause.
+        /// </summary>
+        /// <returns>The delete clause.</returns>
+        protected virtual DeleteClause CreateDeleteClause()
+        {
+            DeleteClause deleteClause = new DeleteClause();
+
+            return deleteClause;
         }
 
         /// <summary>
@@ -171,31 +198,124 @@ namespace WG.Database
         }
 
         /// <summary>
-        /// Loads the database object from the database using it's I.D..
+        /// Creates and returns a select statement for the object.
         /// </summary>
-        /// <returns>True, on success.</returns>
-        public virtual bool Select()
+        /// <returns>The select statement.</returns>
+        public virtual SelectStatement CreateSelectStatement()
         {
+            SelectClause selectClause = this.CreateSelectClause();
+            FromClause fromClause = this.CreateFromClause();
+            WhereClause whereClause = this.CreateWhereClause();
+
+            SelectStatement statement = new SelectStatement(selectClause, fromClause, whereClause);
+
+            return statement;
+        }
+
+        /// <summary>
+        /// Creates and returns an insert statement of the object.
+        /// </summary>
+        /// <returns>The insert statement.</returns>
+        public virtual InsertStatement CreateInsertStatement()
+        {
+            InsertClause insertClause = this.CreateInsertClause();
+
+            InsertStatement statement = new InsertStatement(insertClause);
+
+            return statement;
+        }
+
+        /// <summary>
+        /// Creates and returns an update statement for the object.
+        /// </summary>
+        /// <returns>The update statement.</returns>
+        public virtual UpdateStatement CreateUpdateStatement()
+        {
+            UpdateClause updateClause = this.CreateUpdateClause();
+            WhereClause whereClause = this.CreateWhereClause();
+
+            UpdateStatement updateStatement = new UpdateStatement(updateClause, whereClause);
+
+            return updateStatement;
+        }
+
+        /// <summary>
+        /// Creates and returns a delete statement for the object.
+        /// </summary>
+        /// <returns>The delete statement.</returns>
+        public virtual DeleteStatement CreateDeleteStatement()
+        {
+            DeleteClause deleteClause = this.CreateDeleteClause();
+            FromClause fromClause = this.CreateFromClause();
+
+            DeleteStatement deleteStatement = new DeleteStatement(deleteClause, fromClause);
+
+            return deleteStatement;
+        }
+
+        /// <summary>
+        /// Indicates whether or not the database object already exists on the database.
+        /// </summary>
+        /// <returns>True, if the database object already exists.</returns>
+        public virtual bool Exists()
+        {
+            bool exists = true;
             DbConnectionInfo dci = this.Dci;
             string table = this.GetTableName();
             SelectStatement statement = this.CreateSelectStatement();
             List<SqlAttribute> attributes = new List<SqlAttribute>();
 
-            DataTable dt = statement.Execute(dci);
-            DataRow dr = dt.Rows[0];
-            
-            foreach(DataColumn dc in dt.Columns)
+            try
             {
-                object value = dr[dc];
+                DataTable dt = statement.Execute(dci);
 
-                SqlAttribute attribute = new SqlAttribute(dc.ColumnName, table, value);
-
-                attributes.Add(attribute);
+                exists = (dt.Rows.Count > 0);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("\"SELECT\" error:");
+                Console.WriteLine(ex.ToString());
             }
 
-            this.SetAttributes(attributes);
+            return exists;
+        }
 
-            return true;
+        /// <summary>
+        /// Loads the database object from the database using it's I.D..
+        /// </summary>
+        /// <returns>True, on success.</returns>
+        public virtual bool Select()
+        {
+            bool success = true;
+            DbConnectionInfo dci = this.Dci;
+            string table = this.GetTableName();
+            SelectStatement statement = this.CreateSelectStatement();
+            List<SqlAttribute> attributes = new List<SqlAttribute>();
+
+            try
+            {
+                DataTable dt = statement.Execute(dci);
+                DataRow dr = dt.Rows[0];
+
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    object value = dr[dc];
+
+                    SqlAttribute attribute = new SqlAttribute(dc.ColumnName, table, value);
+
+                    attributes.Add(attribute);
+                }
+
+                this.SetAttributes(attributes);
+            }
+            catch(Exception ex)
+            {
+                success = false;
+                Console.WriteLine("\"SELECT\" error:");
+                Console.WriteLine(ex.ToString());
+            }
+
+            return success;
         }
 
         /// <summary>
@@ -204,7 +324,22 @@ namespace WG.Database
         /// <returns>True, on success.</returns>
         public virtual bool Insert()
         {
-            return true;
+            bool success = true;
+            DbConnectionInfo dci = this.Dci;
+            InsertStatement statement = this.CreateInsertStatement();
+
+            try
+            {
+                statement.Execute(dci);
+            }
+            catch(Exception ex)
+            {
+                success = false;
+                Console.WriteLine("\"INSERT\" error:");
+                Console.WriteLine(ex.ToString());
+            }
+
+            return success;
         }
 
         /// <summary>
@@ -213,7 +348,22 @@ namespace WG.Database
         /// <returns>True, on success.</returns>
         public virtual bool Update()
         {
-            return true;
+            bool success = true;
+            DbConnectionInfo dci = this.Dci;
+            UpdateStatement statement = this.CreateUpdateStatement();
+
+            try
+            {
+                statement.Execute(dci);
+            }
+            catch(Exception ex)
+            {
+                success = false;
+                Console.WriteLine("\"UPDATE\" error:");
+                Console.WriteLine(ex.ToString());
+            }
+
+            return success;
         }
 
         /// <summary>
@@ -222,7 +372,34 @@ namespace WG.Database
         /// <returns>True, on success.</returns>
         public virtual bool Delete()
         {
-            return true;
+            bool success = true;
+            DbConnectionInfo dci = this.Dci;
+            DeleteStatement statement = this.CreateDeleteStatement();
+
+            try
+            {
+                statement.Execute(dci);
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                Console.WriteLine("\"DELETE\" error:");
+                Console.WriteLine(ex.ToString());
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// Creates and returns the string representation of the database object.
+        /// </summary>
+        /// <returns>The string representation.</returns>
+        public override string ToString()
+        {
+            SqlAttribute myId = this.GetMyId();
+            string representation = myId.ToString();
+
+            return representation;
         }
 
         /// <summary>

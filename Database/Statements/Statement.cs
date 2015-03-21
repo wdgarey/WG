@@ -18,6 +18,15 @@ namespace WG.Database.Statements
         { }
 
         /// <summary>
+        /// Gets the statements ending string.
+        /// </summary>
+        /// <returns>The ending string.</returns>
+        protected virtual string GetEndingStr()
+        {
+            return ";";
+        }
+
+        /// <summary>
         /// Creates the SQL command for the statement.
         /// </summary>
         /// <param name="dci">The database connection information.</param>
@@ -28,6 +37,8 @@ namespace WG.Database.Statements
             string connStr = dci.ToConnectionString();
 
             MySqlConnection connection = new MySqlConnection(connStr);
+            connection.Open();
+
             MySqlCommand command = new MySqlCommand(cmdStr, connection);
 
             return command;
@@ -39,7 +50,10 @@ namespace WG.Database.Statements
         /// <returns>The string representation.</returns>
         public override string ToString()
         {
+            string endingStr = this.GetEndingStr();
             string representation = this.CreateString();
+
+            representation += endingStr;
 
             return representation;
         }

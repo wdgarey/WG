@@ -58,6 +58,24 @@ namespace WG.Database.Clauses
         }
 
         /// <summary>
+        /// Gets and returns the opening delimiter string.
+        /// </summary>
+        /// <returns>The opening delimiter string.</returns>
+        protected override string GetOpenDelimiterStr()
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// Gets and returns the closing delimiter string.
+        /// </summary>
+        /// <returns>The closing delimiter string.</returns>
+        protected override string GetCloseDelimiterStr()
+        {
+            return "";
+        }
+
+        /// <summary>
         /// Creates a string representation of the WHERE clause.
         /// </summary>
         /// <returns>The string representation.</returns>

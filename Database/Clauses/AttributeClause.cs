@@ -78,18 +78,22 @@ namespace WG.Database.Clauses
         {
             string keyWord = this.KeyWord;
             string separatorStr = this.GetSeparatorStr();
+            string openDelimStr = this.GetOpenDelimiterStr();
+            string closeDelimStr = this.GetCloseDelimiterStr();
             List<SqlAttribute> attributes = this.Attributes;
 
             StringBuilder sb = new StringBuilder(keyWord);
             sb.Append(" ");
-            
+            sb.Append(openDelimStr);
+
             foreach(SqlAttribute attribute in attributes)
             {
-                sb.Append(attribute.ToString());
+                sb.Append(attribute.GetFullName());
                 sb.Append(separatorStr);
             }
 
             sb.Remove(sb.Length - separatorStr.Length, separatorStr.Length);
+            sb.Append(closeDelimStr);
 
             return sb.ToString();
         }
@@ -99,5 +103,17 @@ namespace WG.Database.Clauses
         /// </summary>
         /// <returns>The attribute separator character.</returns>
         protected abstract string GetSeparatorStr();
+
+        /// <summary>
+        /// Gets the opening delimiter string.
+        /// </summary>
+        /// <returns>The open delimiter.</returns>
+        protected abstract string GetOpenDelimiterStr();
+
+        /// <summary>
+        /// Gets the closing delimiter string.
+        /// </summary>
+        /// <returns>The closing delimiter.</returns>
+        protected abstract string GetCloseDelimiterStr();
     }
 }

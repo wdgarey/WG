@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 using WG.Collections.Trees;
 
-namespace Driver
+namespace Driver.Collections
 {
     /// <summary>
     /// A Red-Black tree driver.
     /// </summary>
-    public class RBTDriver
+    public class RBTDriver : IDriver
     {
         /// <summary>
         /// The random number generator.

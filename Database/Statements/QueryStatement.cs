@@ -27,6 +27,7 @@ namespace WG.Database.Statements
         public virtual DataTable Execute(DbConnectionInfo dci)
         {
             MySqlCommand command = this.CreateCommand(dci);
+            MySqlConnection connection = command.Connection;
 
             MySqlDataReader dReader = command.ExecuteReader();
             
@@ -35,6 +36,8 @@ namespace WG.Database.Statements
 
             dReader.Close();
             dReader.Dispose();
+
+            connection.Close();
 
             return table;
         }

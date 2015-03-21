@@ -13,27 +13,6 @@ namespace WG.Database.Attributes
         private string table;
 
         /// <summary>
-        /// Gets or sets the name of the attribute.
-        /// </summary>
-        public override string Name
-        {
-            get
-            {
-                string name = base.Name;
-
-                if(this.HasTable())
-                {
-                    string table = this.Table;
-                    string separatorStr = this.GetTableNameSepStr();
-
-                    name = table + separatorStr + name;
-                }
-                    return name;
-            }
-            set { base.Name = value; }
-        }
-
-        /// <summary>
         /// Gets or sets the name of the table.
         /// </summary>
         public virtual string Table
@@ -85,6 +64,24 @@ namespace WG.Database.Attributes
         }
 
         /// <summary>
+        /// Adds the table name to the beginning of the given string.
+        /// </summary>
+        /// <param name="str">The given string.</param>
+        /// <returns>The prepended string.</returns>
+        protected virtual string PrependTableName(string str)
+        {
+            if (this.HasTable())
+            {
+                string table = this.Table;
+                string separatorStr = this.GetTableNameSepStr();
+
+                str = table + separatorStr + str;
+            }
+
+            return str;
+        }
+
+        /// <summary>
         /// Indicates whether or not the SQL attribute has a table.
         /// </summary>
         /// <returns>True, if the SQL attribute has a table.</returns>
@@ -94,6 +91,32 @@ namespace WG.Database.Attributes
             bool hasTable = (table != null);
 
             return hasTable;
+        }
+
+        /// <summary>
+        /// Creates and returns the full name of the SQL attribute.
+        /// </summary>
+        /// <returns>The full name.</returns>
+        public virtual string GetFullName()
+        {
+            string name = this.Name;
+
+            string fullName = this.PrependTableName(name);
+
+            return fullName;
+        }
+
+        /// <summary>
+        /// Creates and returns the string representation of the SQL attribute.
+        /// </summary>
+        /// <returns>The string representation.</returns>
+        public override string ToString()
+        {
+            string representation = base.ToString();
+
+            this.PrependTableName(representation);
+
+            return representation;
         }
     }
 }

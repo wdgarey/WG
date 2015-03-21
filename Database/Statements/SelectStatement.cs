@@ -13,68 +13,68 @@ namespace WG.Database.Statements
         /// <summary>
         /// The select clause.
         /// </summary>
-        private SelectClause select;
+        private SelectClause selectClause;
 
         /// <summary>
         /// The from clause.
         /// </summary>
-        private FromClause from;
+        private FromClause fromClause;
 
         /// <summary>
         /// The where clause.
         /// </summary>
-        private WhereClause where;
+        private WhereClause whereClause;
 
         /// <summary>
         /// Gets or sets the select clause.
         /// </summary>
-        public virtual SelectClause Select
+        public virtual SelectClause SelectClause
         {
-            get { return this.select; }
-            set { this.select = value; }
+            get { return this.selectClause; }
+            set { this.selectClause = value; }
         }
 
         /// <summary>
         /// Gets or sets the from clause.
         /// </summary>
-        public virtual FromClause From
+        public virtual FromClause FromClause
         {
-            get { return this.from; }
-            set { this.from = value; }
+            get { return this.fromClause; }
+            set { this.fromClause = value; }
         }
 
         /// <summary>
         /// Gets or sets the where clause.
         /// </summary>
-        public virtual WhereClause Where
+        public virtual WhereClause WhereClause
         {
-            get { return this.where; }
-            set { this.where = value; }
+            get { return this.whereClause; }
+            set { this.whereClause = value; }
         }
 
         /// <summary>
         /// Creates an instance of a select statement.
         /// </summary>
-        /// <param name="select">The select clause.</param>
-        /// <param name="from">The from clause.</param>
-        public SelectStatement(SelectClause select, FromClause from)
+        /// <param name="selectClause">The select clause.</param>
+        /// <param name="fromClause">The from clause.</param>
+        public SelectStatement(SelectClause selectClause, FromClause fromClause)
         {
-            this.Select = select;
-            this.From = from;
-            this.Where = null;
+            this.SelectClause = selectClause;
+            this.FromClause = fromClause;
+            this.WhereClause = null;
         }
 
         /// <summary>
         /// Creates an instance of a select statement.
         /// </summary>
-        /// <param name="select">The select clause.</param>
-        /// <param name="from">The from clause.</param>
-        /// <param name="where">The where clause.</param>
-        public SelectStatement(SelectClause select, FromClause from, WhereClause where)
+        /// <param name="selectClause">The select clause.</param>
+        /// <param name="fromClause">The from clause.</param>
+        /// <param name="whereClause">The where clause.</param>
+        public SelectStatement(SelectClause selectClause, FromClause fromClause, WhereClause whereClause)
         {
-            this.Select = select;
-            this.From = from;
-            this.Where = where;
+            this.SelectClause = selectClause;
+            this.FromClause = fromClause;
+            this.WhereClause = whereClause;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace WG.Database.Statements
         /// <returns>True, if the clause exists.</returns>
         public virtual bool HasSelectClause()
         {
-            SelectClause select = this.Select;
+            SelectClause select = this.SelectClause;
 
             bool hasSelectClause = (select != null);
 
@@ -96,7 +96,7 @@ namespace WG.Database.Statements
         /// <returns>True, if the clause exists.</returns>
         public virtual bool HasFromClause()
         {
-            FromClause from = this.From;
+            FromClause from = this.FromClause;
 
             bool hasFromClause = (from != null);
 
@@ -109,7 +109,7 @@ namespace WG.Database.Statements
         /// <returns>True, if the clause exists.</returns>
         public virtual bool HasWhereClause()
         {
-            WhereClause where = this.Where;
+            WhereClause where = this.WhereClause;
 
             bool hasWhereClause = (where != null);
 
@@ -122,8 +122,8 @@ namespace WG.Database.Statements
         /// <returns>The string representation.</returns>
         protected override string CreateString()
         {
-            SelectClause select = this.Select;
-            FromClause from = this.From;
+            SelectClause select = this.SelectClause;
+            FromClause from = this.FromClause;
             
             StringBuilder sb = new StringBuilder();
             sb.Append(select.ToString());
@@ -132,7 +132,7 @@ namespace WG.Database.Statements
 
             if(this.HasWhereClause())
             {
-                WhereClause where = this.Where;
+                WhereClause where = this.WhereClause;
 
                 sb.Append(" ");
                 sb.Append(where.ToString());
