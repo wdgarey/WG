@@ -16,7 +16,7 @@ namespace WG.Collections.Nodes
         /// <summary>
         /// Accessor to the stored element.
         /// </summary>
-        public DataType Element
+        public virtual DataType Element
         {
             get { return this.element; }
             set { this.element = value; }

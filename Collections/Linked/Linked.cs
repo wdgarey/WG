@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 using WG.Collections.Nodes;
 
@@ -8,7 +9,7 @@ namespace WG.Collections.Linked
     /// A collection of linked elements.
     /// </summary>
     /// <typeparam name="DataType">The data type of the elements that are going to be stored in the collection.</typeparam>
-    public abstract class Linked<DataType> : Collection
+    public abstract class Linked<DataType> : Collection, IEnumerable
     {
         /// <summary>
         /// The sentinel node at the front of the collection.
@@ -39,16 +40,20 @@ namespace WG.Collections.Linked
         }
 
         /// <summary>
-        /// Creates an instance of a Stack.
+        /// Creates an instance of a linked object.
         /// </summary>
         public Linked()
             : base()
         {
-            LinkedNode<DataType> back = new LinkedNode<DataType>();
             LinkedNode<DataType> front = new LinkedNode<DataType>();
+            LinkedNode<DataType> back = new LinkedNode<DataType>();
 
+            /*
             back.Next = front;
             front.Previous = back;
+            */
+
+            back.SetNext(front);
 
             this.Back = back;
             this.Front = front;
@@ -76,10 +81,7 @@ namespace WG.Collections.Linked
         {
             LinkedNode<DataType> front = this.Front;
 
-            front.Previous.Next = node;
-            node.Previous = front.Previous;
-            front.Previous = node;
-            node.Next = front;
+            front.SetPrevious(node);
 
             this.IncrementCount();
         }
@@ -92,10 +94,7 @@ namespace WG.Collections.Linked
         {
             LinkedNode<DataType> back = this.Back;
 
-            back.Next.Previous = node;
-            node.Next = back.Next;
-            back.Next = node;
-            node.Previous = back;
+            back.SetNext(node);
 
             this.IncrementCount();
         }
@@ -108,21 +107,19 @@ namespace WG.Collections.Linked
         /// <returns>True, if the node was inserted successfully.</returns>
         protected virtual bool Insert(int index, LinkedNode<DataType> node)
         {
-            bool valid = false;
+            int position = 0;
+            bool valid = false;            
             LinkedNode<DataType> front = this.Front;
             LinkedNode<DataType> back = this.Back;
             LinkedNode<DataType> temp = back.Next;
-            int position = 0;
+            
             while (temp != front && !valid)
             {
                 if (position == index)
                 {
                     valid = true;
 
-                    node.Next = temp;
-                    node.Previous = temp.Previous;
-                    temp.Previous.Next = node;
-                    temp.Previous = node;
+                    temp.SetPrevious(node);
 
                     this.IncrementCount();
                 }
@@ -196,6 +193,66 @@ namespace WG.Collections.Linked
         }
 
         /// <summary>
+        /// Gets the data at the given index.
+        /// </summary>
+        /// <param name="index">The index of the data.</param>
+        /// <param name="data">The data at the given index.</param>
+        /// <returns>True, if data at the given index exists.</returns>
+        public virtual bool GetData(int index, out DataType data)
+        {
+            bool found = false;
+            data = default(DataType);
+            LinkedNode<DataType> front = this.Front;
+            LinkedNode<DataType> back = this.Back;
+            LinkedNode<DataType> temp = back.Next;
+
+            int position = 0;
+            while (temp != front && !found)
+            {
+                if (position == index)
+                {
+                    found = true;
+                    data = temp.Element;
+                }
+
+                temp = temp.Next;
+                position++;
+            }
+
+            return found;
+        }
+
+
+        /// <summary>
+        /// Sets the data at the given index.
+        /// </summary>
+        /// <param name="index">The index to set the data at.</param>
+        /// <param name="data">The data to set.</param>
+        /// <returns>True, if data at the given index exists.</returns>
+        public virtual bool SetData(int index, DataType data)
+        {
+            bool found = false;
+            LinkedNode<DataType> front = this.Front;
+            LinkedNode<DataType> back = this.Back;
+            LinkedNode<DataType> temp = back.Next;
+
+            int position = 0;
+            while (temp != front && !found)
+            {
+                if (position == index)
+                {
+                    found = true;
+                    temp.Element = data;
+                }
+
+                temp = temp.Next;
+                position++;
+            }
+
+            return found;
+        }
+
+        /// <summary>
         /// Removes and returns the first node in the collection.
         /// </summary>
         /// <returns>The first node in the collection; or null if the collection is empty.</returns>
@@ -208,11 +265,7 @@ namespace WG.Collections.Linked
                 LinkedNode<DataType> front = this.Front;
                 first = front.Previous;
 
-                front.Previous = first.Previous;
-                first.Previous.Next = front;
-
-                first.Next = null;
-                first.Previous = null;
+                front.RemovePrevious();
 
                 this.DecrementCount();
             }
@@ -233,11 +286,7 @@ namespace WG.Collections.Linked
                 LinkedNode<DataType> back = this.Back;
                 last = back.Next;
 
-                back.Next = last.Next;
-                last.Next.Previous = back;
-
-                last.Next = null;
-                last.Previous = null;
+                back.RemoveNext();
 
                 this.DecrementCount();
             }
@@ -254,20 +303,16 @@ namespace WG.Collections.Linked
         {
             LinkedNode<DataType> node = null;
             LinkedNode<DataType> front = this.Front;
-            LinkedNode<DataType> back = this.Back;
-            LinkedNode<DataType> temp = back.Next;
+            LinkedNode<DataType> temp = this.Back;
 
-            while (temp != front && node == null)
+            while (temp.HasNext() && temp.Next != front && node == null)
             {
-                if (temp.Element.Equals(element))
+                if (temp.Next.Element.Equals(element))
                 {
-                    node = temp;
+                    node = temp.Next;
 
-                    node.Previous.Next = node.Next;
-                    node.Next.Previous = node.Previous;
+                    temp.RemoveNext();
 
-                    node.Next = null;
-                    node.Previous = null;
 
                     this.DecrementCount();
                 }
@@ -287,21 +332,16 @@ namespace WG.Collections.Linked
         {
             LinkedNode<DataType> node = null;
             LinkedNode<DataType> front = this.Front;
-            LinkedNode<DataType> back = this.Back;
-            LinkedNode<DataType> temp = back.Next;
+            LinkedNode<DataType> temp = this.Back;
 
             int position = 0;
-            while (temp != front && node == null)
+            while (temp.HasNext() && temp.Next != front && node == null)
             {
                 if (position == index)
                 {
-                    node = temp;
+                    node = temp.Next;
 
-                    node.Previous.Next = node.Next;
-                    node.Next.Previous = node.Previous;
-
-                    node.Next = null;
-                    node.Previous = null;
+                    temp.RemoveNext();
 
                     this.DecrementCount();
                 }
@@ -369,6 +409,24 @@ namespace WG.Collections.Linked
             }
 
             return found;
+        }
+
+        /// <summary>
+        /// Gets the enumerator for the linked collection.
+        /// </summary>
+        /// <returns>The enumerator.</returns>
+        public IEnumerator GetEnumerator()
+        {
+            LinkedNode<DataType> front = this.Front;
+            LinkedNode<DataType> back = this.Back;
+            LinkedNode<DataType> temp = back.Next;
+
+            while (temp != front)
+            {
+                yield return temp.Element;
+
+                temp = temp.Next;
+            }
         }
     }
 }

@@ -34,6 +34,74 @@ namespace WG.Collections.Trees
         }
 
         /// <summary>
+        /// Rotates a subtree to the left.
+        /// </summary>
+        /// <param name="node">The root node of the subtree to rotate left.</param>
+        protected void RotateLeft(BTNode<DataType> node)
+        {
+            BTNode<DataType> right = node.Right;
+
+            node.Right = right.Left;
+            right.Left = node;
+
+            if (node.HasRight())
+            {
+                node.Right.Parent = node;
+            }
+
+            if (node.IsRight())
+            {
+                node.Parent.Right = right;
+            }
+            else if (node.IsLeft())
+            {
+                node.Parent.Left = right;
+            }
+            else
+            {
+                this.Root = right;
+            }
+
+            right.Parent = node.Parent;
+            node.Parent = right;
+        }
+
+        /// <summary>
+        /// Rotates a subtree to the right.
+        /// </summary>
+        /// <param name="node">The root node of the subtree to roate right.</param>
+        protected void RotateRight(BTNode<DataType> node)
+        {
+            BTNode<DataType> left = node.Left;
+
+            node.Left = left.Right;
+
+            node.Left = left.Right;
+            left.Right = node;
+
+            if (node.HasLeft())
+            {
+                node.Left.Parent = node;
+            }
+
+            if (node.IsRight())
+            {
+                node.Parent.Right = left;
+            }
+            else if (node.IsLeft())
+            {
+                node.Parent.Left = left;
+            }
+            else
+            {
+                this.Root = left;
+            }
+
+            left.Parent = node.Parent;
+            node.Parent = left;
+        }
+
+        /// <summary>
         /// Gets the node containing the given element.
         /// </summary>
         /// <param name="element">The given element.</param>

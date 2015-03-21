@@ -29,6 +29,18 @@ namespace WG.Collections.Linked
 
 
         /// <summary>
+        /// Inserts an element into the list.
+        /// </summary>
+        /// <param name="index">The index at which to insert the element.</param>
+        /// <param name="element">The element to insert.</param>
+        public virtual void Insert(int index, DataType element)
+        {
+            LinkedNode<DataType> newNode = new LinkedNode<DataType>(element);
+
+            base.Insert(index, newNode);
+        }
+
+        /// <summary>
         /// Gets the element at the given index.
         /// </summary>
         /// <param name="index">The 0 based index of the element.</param>

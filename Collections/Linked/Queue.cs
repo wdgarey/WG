@@ -25,7 +25,7 @@ namespace WG.Collections.Linked
         {
             LinkedNode<DataType> newNode = new LinkedNode<DataType>(element);
 
-            this.AddToFront(newNode);
+            this.AddToBack(newNode);
         }
 
         /// <summary>
@@ -37,13 +37,13 @@ namespace WG.Collections.Linked
         {
             bool success = false;
             element = default(DataType);
-            LinkedNode<DataType> last = this.RemoveLast();
+            LinkedNode<DataType> first = this.RemoveFirst();
 
-            if (last != null)
+            if (first != null)
             {
                 success = true;
 
-                element = last.Element;
+                element = first.Element;
             }
 
             return success;
