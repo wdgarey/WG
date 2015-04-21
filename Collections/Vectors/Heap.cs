@@ -48,20 +48,7 @@ namespace WG.Collections.Vectors
         public Heap(DataType[] elements)
             : base()
         {
-            HeapNode<DataType>[] nodes = new HeapNode<DataType>[elements.Length];
-
-            for (int index = 0; index < elements.Length; index++)
-            {
-                DataType element = elements[index];
-                HeapNode<DataType> newNode = new HeapNode<DataType>();
-
-                newNode.Element = element;
-                newNode.Index = index;
-
-                nodes[index] = newNode;
-            }
-
-            this.Nodes = new HeapVector<DataType>(nodes);
+            this.Nodes = new HeapVector<DataType>(elements);
 
             this.Heapify();
         }
@@ -93,7 +80,7 @@ namespace WG.Collections.Vectors
             {
                 int parentIndex = node.GetParentIndex();
 
-                HeapNode<DataType> parent = nodes[parentIndex];
+                HeapNode<DataType> parent = nodes.Get(parentIndex);
 
                 DataType cElement = node.Element;
                 DataType pElement = parent.Element;
@@ -102,6 +89,9 @@ namespace WG.Collections.Vectors
                 {
                     parent.Element = cElement;
                     node.Element = pElement;
+
+                    nodes.Set(parent);
+                    nodes.Set(node);
 
                     node = parent;
                 }
@@ -126,7 +116,7 @@ namespace WG.Collections.Vectors
             while (leftIndex < nodes.Count && !done)
             {
                 HeapNode<DataType> swapNode = node;
-                HeapNode<DataType> left = nodes[leftIndex];
+                HeapNode<DataType> left = nodes.Get(leftIndex);
 
                 if (this.ShouldSwap(swapNode.Element, left.Element))
                 {
@@ -135,7 +125,7 @@ namespace WG.Collections.Vectors
 
                 if (rightIndex <nodes.Count)
                 {
-                    HeapNode<DataType> right = nodes[rightIndex];
+                    HeapNode<DataType> right = nodes.Get(rightIndex);
 
                     if (this.ShouldSwap(swapNode.Element, right.Element))
                     {
@@ -154,6 +144,9 @@ namespace WG.Collections.Vectors
 
                     node.Element = cElement;
                     swapNode.Element = pElement;
+
+                    nodes.Set(node);
+                    nodes.Set(swapNode);
 
                     node = swapNode;
 
@@ -174,7 +167,7 @@ namespace WG.Collections.Vectors
 
             for (int index = lastParentIndex; index >= 0; index--)
             {
-                HeapNode<DataType> parent = nodes[index];
+                HeapNode<DataType> parent = nodes.Get(index);
 
                 this.SwapDownward(parent);
             }
@@ -202,7 +195,7 @@ namespace WG.Collections.Vectors
             HeapVector<DataType> nodes = this.Nodes;
             HeapNode<DataType> newNode = this.CreateNode(element);
 
-            nodes.Add(newNode);
+            nodes.Add(newNode.Element);
 
             this.SwapUpward(newNode);
         }
@@ -228,6 +221,8 @@ namespace WG.Collections.Vectors
                 HeapNode<DataType> last = nodes.RemoveLast();
 
                 root.Element = last.Element;
+
+                nodes.Set(root);
 
                 this.SwapDownward(root);
             }

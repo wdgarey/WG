@@ -20,24 +20,11 @@ namespace Driver
             IDriver driver = null;
             //driver = new RBTDriver();
             //driver = new DbObjDriver();
-            //driver = new HeapDriver();
+            driver = new HeapDriver();
 
             if (driver != null)
             {
                 driver.Main();
-            }
-
-            List<int> numbers = new List<int>();
-
-            numbers.Remove(1);
-            numbers.Add(1);
-            numbers.RemoveAt(0);
-            numbers.RemoveAt(0);
-            numbers.Add(1);
-            
-            foreach(int n in numbers)
-            {   
-                Console.WriteLine(n.ToString());
             }
 
             Console.WriteLine();

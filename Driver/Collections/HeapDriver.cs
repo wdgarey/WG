@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 using WG.Collections.Vectors;
 
 namespace Driver.Collections
@@ -14,7 +16,7 @@ namespace Driver.Collections
         public void Main()
         {
             Random rnd = new Random();
-            Number[] rndArray = new Number[22000000];
+            Number[] rndArray = new Number[100000000];
             
             Console.WriteLine("Creating array of random numbers.");
 
@@ -24,8 +26,14 @@ namespace Driver.Collections
             }
 
             Console.WriteLine("Creating heap.");
-
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             MinHeap<Number> heap = new MinHeap<Number>(rndArray);
+            timer.Stop();
+
+            TimeSpan time = timer.Elapsed;
+
+            Console.WriteLine("Heap created in " + time.ToString());
 
             int sect = 25;
             int count = 1;

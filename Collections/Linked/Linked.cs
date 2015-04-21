@@ -48,11 +48,6 @@ namespace WG.Collections.Linked
             LinkedNode<DataType> front = new LinkedNode<DataType>();
             LinkedNode<DataType> back = new LinkedNode<DataType>();
 
-            /*
-            back.Next = front;
-            front.Previous = back;
-            */
-
             back.SetNext(front);
 
             this.Back = back;

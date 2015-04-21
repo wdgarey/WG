@@ -44,6 +44,17 @@ namespace WG.Collections.Nodes
         /// <summary>
         /// Creates an instance of a HeapNode.
         /// </summary>
+        /// <param name="index">The index of the node.</param>
+        /// <param name="element">The element of the node.</param>
+        public HeapNode(int index, DataType element)
+            : base(element)
+        {
+            this.Index = index;
+        }
+
+        /// <summary>
+        /// Creates an instance of a HeapNode.
+        /// </summary>
         /// <param name="element">The element to store in the node.</param>
         public HeapNode(DataType element)
             : base(element)
