@@ -371,5 +371,37 @@ namespace WG.Collections.Trees
 
             return elements;
         }
+
+        /// <summary>
+        /// Indicates whether or not there exists an element, x, such that x is greater than or equal to a,
+        /// and x is less than or equal to b.
+        /// </summary>
+        /// <param name="a">The a element.</param>
+        /// <param name="b">The b element.</param>
+        /// <returns>True, if there exists an element between a and b, inclusive.</returns>
+        public virtual bool Between(DataType a, DataType b)
+        {
+            BTNode<DataType> temp = this.Root;
+
+            bool found = false;
+
+            while (temp != null && !found)
+            {
+                if (a.IsGreaterThan(temp.Element))
+                {
+                    temp = temp.Right;
+                }
+                else if (b.IsLessThan(temp.Element))
+                {
+                    temp = temp.Left;
+                }
+                else
+                {
+                    found = true;
+                }
+            }
+
+            return found;
+        }
     }
 }
