@@ -232,6 +232,46 @@ namespace WG.Collections.Trees
                 this.GetInOrder(node.Right, ref index, collection);
             }
         }
+        /// <summary>
+        /// The recursive function to use to validate the tree.
+        /// </summary>
+        /// <param name="node">The node in question.</param>
+        /// <param name="isValid">A flag that indicates whether or not the tree is valid.</param>
+        /// <returns>True, if the tree is valid, or false otherwise.</returns>
+        protected virtual bool IsValidRec(BTNode<DataType> node, bool isValid)
+        {
+            if (isValid == true && node.Left != null)
+            {
+                isValid = node.Left.Element.IsLessThan(node.Element);
+                isValid = this.IsValidRec(node.Left, isValid);
+            }
+
+            if (isValid == true && node.Right != null)
+            {
+                isValid = node.Right.Element.IsGreaterThan(node.Element);
+                isValid = this.IsValidRec(node.Right, isValid);
+            }
+
+            return isValid;
+        }
+
+        /// <summary>
+        /// Indicates whether or not the tree is valid.
+        /// </summary>
+        /// <returns>True, if the tree is valid.</returns>
+        public virtual bool IsValid()
+        {
+            BTNode<DataType> root = this.Root;
+
+            bool isValid = true;
+
+            if (root != null)
+            {
+                this.IsValidRec(root, isValid);
+            }
+
+            return isValid;
+        }
 
         /// <summary>
         /// Indicates whether or not the tree is empty.
@@ -371,37 +411,38 @@ namespace WG.Collections.Trees
 
             return elements;
         }
-
+        
         /// <summary>
-        /// Indicates whether or not there exists an element, x, such that x is greater than or equal to a,
-        /// and x is less than or equal to b.
+        /// Indicates whether or not there is an element with a key that is contained
+        /// within a range (inclusive).
         /// </summary>
-        /// <param name="a">The a element.</param>
-        /// <param name="b">The b element.</param>
-        /// <returns>True, if there exists an element between a and b, inclusive.</returns>
-        public virtual bool Between(DataType a, DataType b)
+        /// <param name="min">The minimum.</param>
+        /// <param name="max">The maximum.</param>
+        /// <returns>True if there is a key x that is greater than or equal to min and less than or equal to max.</returns>
+        public virtual bool Contains(DataType min, DataType max)
         {
+            bool isContained = false;
             BTNode<DataType> temp = this.Root;
 
-            bool found = false;
-
-            while (temp != null && !found)
+            while (temp != null && !isContained)
             {
-                if (a.IsGreaterThan(temp.Element))
+                DataType element = temp.Element;
+
+                if (element.IsLessThan(min))
                 {
                     temp = temp.Right;
                 }
-                else if (b.IsLessThan(temp.Element))
+                else if (element.IsGreaterThan(max))
                 {
                     temp = temp.Left;
                 }
                 else
                 {
-                    found = true;
+                    isContained = true;
                 }
             }
 
-            return found;
+            return isContained;
         }
     }
 }
